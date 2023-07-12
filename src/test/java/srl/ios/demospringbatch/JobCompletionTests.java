@@ -7,6 +7,8 @@ import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBatchTest
@@ -42,7 +44,7 @@ class JobCompletionTests {
 
     @Test
     void testTellDateJob_doesComplete() throws Exception {
-        JobParameters jobParameters = new JobParametersBuilder().toJobParameters();
+        JobParameters jobParameters = new JobParametersBuilder().addLocalDate("date",  LocalDate.of(1111,1,11)).toJobParameters();
         jobLauncherTestUtils.setJob(tellDateJob);
         JobExecution jobExecution = jobLauncherTestUtils.launchJob(jobParameters);
         assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
