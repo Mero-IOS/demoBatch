@@ -26,12 +26,12 @@ public class DatedJobConfig {
         }
 
         @Bean
-        Job tellDateJob(JobRepository jobRepository, Step printDateStep, @Value("${date}") LocalDate date){
-            return new JobBuilder("helloJob", jobRepository).incrementer(new RunIdIncrementer()).start(printDateStep).build();
+        Job tellDateJob(JobRepository jobRepository, Step printDateStep){
+            return new JobBuilder("tellDateJob", jobRepository).incrementer(new RunIdIncrementer()).start(printDateStep).build();
         }
 
         @Bean
         Step printDateStep(JobRepository jobRepository, Tasklet getDateTask, PlatformTransactionManager transactionManager) {
-            return new StepBuilder("helloStep", jobRepository).tasklet(getDateTask, transactionManager).build();
+            return new StepBuilder("tellDateStep", jobRepository).tasklet(getDateTask, transactionManager).build();
         }
 }
